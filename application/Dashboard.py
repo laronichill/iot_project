@@ -171,18 +171,31 @@ bluetooth_Interval = dcc.Interval(
 sidebar = html.Div([
     html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
-            html.Img(src=path_to_picture, id="picture_path", style={'border-radius': '80px', 'width':'140px', 'height':'140px', 'object-fit': 'cover', 'display': 'block','margin-left':'auto','margin-right': 'auto'}),
-            html.H3("Username:" + str(user_id), style={'margin-top':'30px'}, id="username_user_data"),
-            html.H4("Favorites ", style={'margin-top':'40px'}),
-            html.H5("Humidity: " + str(humidity), style={'margin-left':'15px'}, id="humidity_user_data"),
-            html.H5("Temperature: " + str(temp_threshold), style={'margin-left':'15px'}, id="temperature_user_data"),
-            html.H5("Light Intensity: " + str(light_threshold), style={'margin-left':'15px'}, id="lightintensity_user_data")
-            ])
+        html.Img(
+            src=path_to_picture,
+            id="picture_path",
+            style={
+                'border': '2px solid black',  # Add black border
+                'width': '140px',
+                'height': '140px',
+                'object-fit': 'cover',
+                'display': 'block',
+                'margin-left': 'auto',
+                'margin-right': 'auto'
+            }
+        ),
+        html.H3("Username:" + str(user_id), style={'margin-top': '30px'}, id="username_user_data"),
+        html.H4("Favorites ", style={'margin-top': '40px'}),
+        html.H5("Humidity: " + str(humidity), style={'margin-left': '15px'}, id="humidity_user_data"),
+        html.H5("Temperature: " + str(temp_threshold), style={'margin-left': '15px'}, id="temperature_user_data"),
+        html.H5("Light Intensity: " + str(light_threshold), style={'margin-left': '15px'}, id="lightintensity_user_data")
     ])
+])
+
 
 card_content1 = dbc.Container(
     [
-        """ dbc.Row(
+        dbc.Row(
             [
                 dbc.Col(
                     html.H1(
@@ -191,7 +204,7 @@ card_content1 = dbc.Container(
                     )
                 )
             ]
-        ), """
+        ),
         dbc.Row([
             dbc.Col(
                 dbc.Card(
@@ -236,7 +249,7 @@ card_content1 = dbc.Container(
                 ),
                 width="auto"
             )
-        ], justify="center")
+        ], justify="center"),
         dbc.Row([
             dbc.Col(dbc.Card(
                      html.Div([
