@@ -81,7 +81,8 @@ daq_Gauge = daq.Gauge(
                 showCurrentValue=True,
                 size=250,
                 max=100,
-                min=0)
+                min=0,
+                style={'margin': 'auto'}  )
 
 html_Humidity_Label = html.H2("Humidity", style={'text-align': 'center'});
 
@@ -181,19 +182,19 @@ sidebar = html.Div([
 
 card_content1 = dbc.Container(
     [
-        dbc.Row(
+        """ dbc.Row(
             [
                 dbc.Col(
                     html.H1(
-                        html.B("SMART HOME"),
+                        html.B("IOT PROJECT PHASE 4"),
                         className="text-center",
                     )
                 )
             ]
-        ),
+        ), """
         dbc.Row([
-            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Humidity_Label, daq_Gauge])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
-            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Temperature_Label, daq_Thermometer])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Humidity_Label, daq_Gauge], style={'text-align': 'center'})), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Temperature_Label, daq_Thermometer], style={'text-align': 'center'})), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(dbc.Col(html.Div([html_Fan_Label, html_Div_Fan_Gif, html_Fan_Status_Message])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto")],
             justify="center",
         ),
