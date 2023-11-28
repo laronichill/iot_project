@@ -258,15 +258,14 @@ def update_output(value):
         print("Humidity : %.2f \t \n"%(dht.humidity))  
         return dht.humidity
 
-# Callback for thermometer and Celcius to Fahrenheit conversion
+# Callback for thermometer conversion
 @app.callback(
     [Output('my-thermometer-1', 'value'),
      Output('my-thermometer-1', 'min'),
      Output('my-thermometer-1', 'max'),
      Output('my-thermometer-1', 'scale'),
      Output('my-thermometer-1', 'units')],
-    [Input('fahrenheit-switch', 'value'),
-    Input('my-thermometer-1', 'value'),
+    [Input('my-thermometer-1', 'value'),
     Input('temp-update', 'n_intervals')])
 def update_output(switch_state, temp_value, interval_value):
     dht = DHT.DHT(DHTPin)   
@@ -392,7 +391,7 @@ def sendUserEnteredEmail(user_name): #for user(rfid)
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-                print("Connected to MQTT Broker!")
+            print("Connected to MQTT Broker!")
             time.sleep(10)
         else:
             print("Failed to connect, return code %d\n", rc)
