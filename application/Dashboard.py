@@ -175,6 +175,7 @@ bluetooth_Interval = dcc.Interval(
             n_intervals = 0)
 
 
+
 sidebar = html.Div([
     html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
@@ -315,11 +316,17 @@ def update_user_information(n):
     return "Username: " + str(user_id) ,"Humidity: 40" ,"Temperature: " +  str(temp_threshold), "Light Intensity: " + str(light_threshold), path_to_picture
 
 #Callback for light intensity
-@app.callback(Output('light-intensity', 'value'), Input('light-intensity-update', 'n_intervals'))  
+@app.callback(
+    Output('light-intensity-value', 'children'),
+    Input('light-intensity-update', 'n_intervals')
+)  
 def update_output(value):
-#     run()
-    print("Here is light intensity: ", esp_message) 
-    return esp_message
+    # Your existing code to get the light intensity value
+    light_intensity = esp_message
+    print("Here is light intensity:", light_intensity)
+    
+    # Return the light intensity value to update the content of the div
+    return f"Light Intensity Value: {light_intensity}"
 
 
 """ sender_email = "iotprojectemail1@gmail.com"
@@ -400,6 +407,7 @@ def connect_mqtt() -> mqtt_client:
 def on_message_from_lightintensity(client, userdata, message):
    global esp_message
    esp_message = int(float(message.payload.decode()))
+   
 
 #MQTT for rfid tag
 def on_message_from_rfid(client, userdata, message):
