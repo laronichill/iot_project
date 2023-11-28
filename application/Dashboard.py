@@ -115,7 +115,7 @@ daq_Led_Light_Intensity_LEDDisplay = html.Div(
 # all fan related html
 html_Div_Fan_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url, id='lottie-gif', isStopped=True, isClickToPauseDisabled=True)], id='fan_display')
 html_Fan_Status_Message = html.H5(id='fan_status_message',style={'text-align':'center'})
-html_Fan_Label = html.H6("Electric Fan", style={'text-align': 'center'});
+html_Fan_Label = html.H2("Motor Fan", style={'text-align': 'center'});
 
 # all related to light intensity and led html
 html_Light_Intensity_Label =  html.H2('Light Intensity',style={'text-align':'center'})
@@ -123,7 +123,7 @@ html_Led_Status_Message = html.H1(id='light_h1',style={'text-align':'center'})
 
 #all bluetooth related html
 html_Bluetooth_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url2, isClickToPauseDisabled=True)])
-html_bluetooth_Label =  html.H6('Bluetooth Devices',style={'text-align':'center'})
+html_bluetooth_Label =  html.H2('Bluetooth Devices',style={'text-align':'center'})
 
 # Intervals
 fan_Status_Message_Interval = dcc.Interval(
@@ -212,7 +212,7 @@ card_content1 = dbc.Container(
                          html.Img(id="light-bulb", src=light_bulb_off,
                                   style={'width':'80px', 'height': '110px',
                                   'display': 'block','margin-left':'auto','margin-right': 'auto', 'margin-top':'10px'}),
-                         html.H2(id='light-intensity-label', style={'text-align': 'center'}),
+                         html.H3(id='light-intensity-label', style={'text-align': 'center'}),
                          html.H5(id='email_heading',style ={"text-align":"center"}) ]),
                      color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(
@@ -320,7 +320,7 @@ def update_output(value):
     light_intensity = esp_message
     print("Here is light intensity:", light_intensity)
     
-    return f"Light Intensity: {light_intensity}"
+    return f"{light_intensity}"
 
 
 
