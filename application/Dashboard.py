@@ -118,7 +118,7 @@ html_Fan_Status_Message = html.H5(id='fan_status_message',style={'text-align':'c
 html_Fan_Label = html.H6("Electric Fan", style={'text-align': 'center'});
 
 # all related to light intensity and led html
-html_Light_Intensity_Label =  html.H6('Light Intensity',style={'text-align':'center'})
+html_Light_Intensity_Label =  html.H2('Light Intensity',style={'text-align':'center'})
 html_Led_Status_Message = html.H1(id='light_h1',style={'text-align':'center'})
 
 #all bluetooth related html
@@ -179,11 +179,11 @@ sidebar = html.Div([
     html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
             html.Img(src=path_to_picture, id="picture_path", style={'border-radius': '80px', 'width':'140px', 'height':'140px', 'object-fit': 'cover', 'display': 'block','margin-left':'auto','margin-right': 'auto'}),
-            html.H6("Username:" + str(user_id), style={'margin-top':'30px'}, id="username_user_data"),
+            html.H3("Username:" + str(user_id), style={'margin-top':'30px'}, id="username_user_data"),
             html.H4("Favorites ", style={'margin-top':'40px'}),
-            html.H6("Humidity: " + str(humidity), style={'margin-left':'15px'}, id="humidity_user_data"),
-            html.H6("Temperature: " + str(temp_threshold), style={'margin-left':'15px'}, id="temperature_user_data"),
-            html.H6("Light Intensity: " + str(light_threshold), style={'margin-left':'15px'}, id="lightintensity_user_data")
+            html.H5("Humidity: " + str(humidity), style={'margin-left':'15px'}, id="humidity_user_data"),
+            html.H5("Temperature: " + str(temp_threshold), style={'margin-left':'15px'}, id="temperature_user_data"),
+            html.H5("Light Intensity: " + str(light_threshold), style={'margin-left':'15px'}, id="lightintensity_user_data")
             ])
     ])
 
@@ -212,7 +212,7 @@ card_content1 = dbc.Container(
                          html.Img(id="light-bulb", src=light_bulb_off,
                                   style={'width':'80px', 'height': '110px',
                                   'display': 'block','margin-left':'auto','margin-right': 'auto', 'margin-top':'10px'}),
-                         html.H6(id='light-intensity-label', style={'text-align': 'center'}),
+                         html.H2(id='light-intensity-label', style={'text-align': 'center'}),
                          html.H5(id='email_heading',style ={"text-align":"center"}) ]),
                      color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(
