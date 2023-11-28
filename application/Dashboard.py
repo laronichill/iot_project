@@ -31,19 +31,12 @@ app = Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=[
     ])
 
 
-navbar = dbc.NavbarSimple(
-    brand="IOT SMART HOME",
-    color="dark",
-    dark=True,
-    sticky="top"
-)
-
 #---------User Information Variables-------
 user_id = "Default"
 temp_threshold = 25.0
 light_threshold = 500
 humidity = 35
-path_to_picture = 'assets/luigi.jpg'
+path_to_picture = 'assets/cruz.jpg'
 #-----------------------------------------
 
 #MQTT connection variables
@@ -76,14 +69,12 @@ GPIO.setup(Motor3, GPIO.IN)
 GPIO.setup(LedPin, GPIO.OUT)
 GPIO.setup(DHTPin, GPIO.OUT)
 
-#Images and GIFs
 light_bulb_off = 'assets/lightbulbOFF.png'        
 light_bulb_on = 'assets/lightbulbON.png'       
 url="https://assets5.lottiefiles.com/packages/lf20_UdIDHC.json" #fan lottie gif
 options = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 url2 = "https://assets8.lottiefiles.com/packages/lf20_ylvmhzmx.json" #bluetooth lottie gif
 
-# Dashboard Components
 daq_Gauge = daq.Gauge(
                 id='my-gauge-1',
                 label="Humidity",
@@ -112,20 +103,16 @@ daq_Led_Light_Intensity_LEDDisplay = html.Div(
     ]
 )
  
-# all fan related html
 html_Div_Fan_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url, id='lottie-gif', isStopped=True, isClickToPauseDisabled=True)], id='fan_display')
 html_Fan_Status_Message = html.H5(id='fan_status_message',style={'text-align':'center'})
 html_Fan_Label = html.H2("Motor Fan", style={'text-align': 'center'});
 
-# all related to light intensity and led html
 html_Light_Intensity_Label =  html.H2('Light Intensity',style={'text-align':'center'})
 html_Led_Status_Message = html.H1(id='light_h1',style={'text-align':'center'})
 
-#all bluetooth related html
 html_Bluetooth_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url2, isClickToPauseDisabled=True)])
 html_bluetooth_Label =  html.H2('Bluetooth Devices',style={'text-align':'center'})
 
-# Intervals
 fan_Status_Message_Interval = dcc.Interval(
             id='fan_status_message_update',
             disabled=False,
@@ -237,7 +224,6 @@ content = html.Div([
 
 # Dashboard Layout
 app.layout = dbc.Container([
-                dbc.Row(navbar),
                 dbc.Row([
                     dbc.Col(sidebar, width=2), 
                     dbc.Col(content, width=10, className="bg-secondary") # content col
