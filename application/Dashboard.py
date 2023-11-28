@@ -193,11 +193,50 @@ card_content1 = dbc.Container(
             ]
         ), """
         dbc.Row([
-            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Humidity_Label, daq_Gauge], style={'text-align': 'center'})), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
-            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Temperature_Label, daq_Thermometer], style={'text-align': 'center'})), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
-            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Fan_Label, html_Div_Fan_Gif, html_Fan_Status_Message])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto")],
-            justify="center",
-        ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.Col(
+                        html.Div([
+                            html_Humidity_Label,
+                            daq_Gauge
+                        ], style={'text-align': 'center'})
+                    ),
+                    color="secondary",
+                    inverse=True,
+                    style={"width": "30rem", 'height': "22rem"}
+                ),
+                width="auto"
+            ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.Col(
+                        html.Div([
+                            html_Temperature_Label,
+                            daq_Thermometer
+                        ], style={'text-align': 'center'})
+                    ),
+                    color="secondary",
+                    inverse=True,
+                    style={"width": "30rem", 'height': "22rem"}
+                ),
+                width="auto"
+            ),
+            dbc.Col(
+                dbc.Card(
+                    dbc.Col(
+                        html.Div([
+                            html_Fan_Label,
+                            html_Div_Fan_Gif,
+                            html_Fan_Status_Message
+                        ])
+                    ),
+                    color="secondary",
+                    inverse=True,
+                    style={"width": "30rem", 'height': "22rem"}
+                ),
+                width="auto"
+            )
+        ], justify="center")
         dbc.Row([
             dbc.Col(dbc.Card(
                      html.Div([
