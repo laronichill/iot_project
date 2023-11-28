@@ -175,7 +175,6 @@ bluetooth_Interval = dcc.Interval(
             n_intervals = 0)
 
 
-
 sidebar = html.Div([
     html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
@@ -213,7 +212,7 @@ card_content1 = dbc.Container(
                          html.Img(id="light-bulb", src=light_bulb_off,
                                   style={'width':'80px', 'height': '110px',
                                   'display': 'block','margin-left':'auto','margin-right': 'auto', 'margin-top':'10px'}),
-                         daq_Led_Light_Intensity_LEDDisplay,
+                         html.H6(id='light-intensity-label', style={'text-align': 'center'}),
                          html.H5(id='email_heading',style ={"text-align":"center"}) ]),
                      color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(
@@ -316,17 +315,13 @@ def update_user_information(n):
     return "Username: " + str(user_id) ,"Humidity: 40" ,"Temperature: " +  str(temp_threshold), "Light Intensity: " + str(light_threshold), path_to_picture
 
 #Callback for light intensity
-@app.callback(
-    Output('light-intensity-value', 'children'),
-    Input('light-intensity-update', 'n_intervals')
-)  
+@app.callback(Output('light-intensity-label', 'children'),Input('light-intensity-update', 'n_intervals'))  
 def update_output(value):
-    # Your existing code to get the light intensity value
     light_intensity = esp_message
     print("Here is light intensity:", light_intensity)
     
-    # Return the light intensity value to update the content of the div
-    return f"Light Intensity Value: {light_intensity}"
+    return f"Light Intensity: {light_intensity}"
+
 
 
 """ sender_email = "iotprojectemail1@gmail.com"
