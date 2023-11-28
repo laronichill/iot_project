@@ -267,7 +267,7 @@ def update_output(value):
      Output('my-thermometer-1', 'units')],
     [Input('my-thermometer-1', 'value'),
     Input('temp-update', 'n_intervals')])
-def update_output(switch_state, temp_value, interval_value):
+def update_output(temp_value, interval_value):
     dht = DHT.DHT(DHTPin)   
     while(True):
         for i in range(0,15):            
@@ -282,11 +282,8 @@ def update_output(switch_state, temp_value, interval_value):
         if dht.temperature >= temp_threshold and temp_email_sent == False:
             sendEmail()
             temp_email_sent = True
-             
-        if switch_state:
-           return (temperature * 1.8) + 32, 40, 120, {'start': 40, 'interval': 10}, 'F'
-        else:
-            return temperature, -40, 60, {'start': -40, 'interval': 10}, 'C'
+
+        return temperature, -40, 60, {'start': -40, 'interval': 10}, 'C'
 
 # Checks if the Motor is active or not
 def is_fan_on():  
