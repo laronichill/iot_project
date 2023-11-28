@@ -77,22 +77,27 @@ url2 = "https://assets8.lottiefiles.com/packages/lf20_ylvmhzmx.json" #bluetooth 
 
 daq_Gauge = daq.Gauge(
                 id='my-gauge-1',
-                label="Humidity",
+                label="",
                 showCurrentValue=True,
                 size=250,
                 max=100,
                 min=0)
+
+html_Humidity_Label = html.H2("Humidity", style={'text-align': 'center'});
+
 
 daq_Thermometer = daq.Thermometer(
                     id='my-thermometer-1',
                     min=-40,
                     max=60,
                     scale={'start': -40, 'interval': 10},
-                    label="Temperature",
+                    label="",
                     showCurrentValue=True,
                     height=150,
                     units="C",
                     color="red")
+
+html_Temperature_Label = html.H2("Temperature Fan", style={'text-align': 'center'});
 
 
 daq_Led_Light_Intensity_LEDDisplay = html.Div(
@@ -187,8 +192,8 @@ card_content1 = dbc.Container(
             ]
         ),
         dbc.Row([
-            dbc.Col(dbc.Card(dbc.Col(daq_Gauge), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
-            dbc.Col(dbc.Card(dbc.Col(html.Div([daq_Thermometer])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Humidity_Label, daq_Gauge])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Temperature_Label, daq_Thermometer])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(dbc.Col(html.Div([html_Fan_Label, html_Div_Fan_Gif, html_Fan_Status_Message])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto")],
             justify="center",
         ),
@@ -334,7 +339,6 @@ def sendEmail(): #for temperature
             server.sendmail(sender_email, receiver_email, message)
 
 def sendLedStatusEmail(): #for LED
-        print("PASSED BY SENDLEDSTATUSEMAIL method")
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
         sender_email = "iotprojectemail1@gmail.com"
