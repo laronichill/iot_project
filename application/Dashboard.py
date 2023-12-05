@@ -286,7 +286,7 @@ app.layout = dbc.Container([
         children=[
             html.H1("Smart Home Dashboard", style={'color': 'white', 'font-size': '2.5rem'}),
         ],
-        style={'background-color': '#121b30', 'padding': '1rem', 'text-align': 'center', 'width': '100%', 'border-bottom': '2px solid #d8dce0'}
+        style={'background-color': '#121b30', 'text-align': 'center', 'width': '100%', 'border-bottom': '5px solid #070b13'}
     ),
     dbc.Row([
         dbc.Col(sidebar, width=2, style={'background-color': '#d8dce0'}),
