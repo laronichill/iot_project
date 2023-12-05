@@ -270,7 +270,7 @@ card_content1 = dbc.Container(
             justify="center",
             className="mt-5"),
     ],
-    fluid=True, )
+    fluid=True, style={'margin-top': '40'})
 
 content = html.Div([
     dbc.Row([
@@ -286,12 +286,12 @@ app.layout = dbc.Container([
         children=[
             html.H1("Smart Home Dashboard", style={'color': 'white', 'font-size': '2.5rem'}),
         ],
-        style={'background-color': '#121b30', 'text-align': 'center', 'width': '100%', 'border-bottom': '5px solid #070b13', 'padding-bottom': '20px'}
+        style={'background-color': '#121b30', 'text-align': 'center', 'width': '100%', 'border-bottom': '5px solid #070b13'}
     ),
     dbc.Row([
         dbc.Col(sidebar, width=2, style={'background-color': '#d8dce0'}),
         dbc.Col(content, width=10, className="bg-dark")  # content col
-    ], style={"height": "100vh", 'padding-top': '20px'}),  # outer
+    ], style={"height": "100vh"}),  # outer
 ], fluid=True)
 
 # Callback for the humidity
