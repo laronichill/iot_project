@@ -282,7 +282,7 @@ content = html.Div([
            dbc.Row([
                 card_content1,
                 humidity_Interval, temperature_Interval, light_Intensity_Interval, led_On_Email_Interval,
-                userinfo_Interval, bluetooth_Interval, fan_Status_Message_Interval, fan_Interval, check-email-update
+                userinfo_Interval, bluetooth_Interval, fan_Status_Message_Interval, fan_Interval, check_Email_Interval
              ]),
         ])
 
