@@ -209,9 +209,9 @@ card_content1 = dbc.Container(
                             daq_Gauge
                         ], style={'text-align': 'center'})
                     ),
-                    color="#7c8895",
+                    color="#606b76",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}
                 ),
                 width="auto"
             ),
@@ -223,9 +223,9 @@ card_content1 = dbc.Container(
                             daq_Thermometer
                         ], style={'text-align': 'center'})
                     ),
-                    color="#7c8895",
+                    color="#606b76",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}
                 ),
                 width="auto"
             ),
@@ -238,9 +238,9 @@ card_content1 = dbc.Container(
                             html_Fan_Status_Message
                         ])
                     ),
-                    color="#7c8895",
+                    color="#242e31",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}
                 ),
                 width="auto"
             )
@@ -256,7 +256,7 @@ card_content1 = dbc.Container(
                     html.H3(id='light-intensity-label', style={'text-align': 'center'}),
                     html.H5(id='email_heading', style={"text-align": "center"})
                 ]),
-                color="#7c8895", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}),
+                color="#242e31", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}),
                 width="auto"),
             dbc.Col(dbc.Card(
                 html.Div([
@@ -265,7 +265,7 @@ card_content1 = dbc.Container(
                     html.H5("Number of Bluetooth Devices: ", id='bluetooth_heading',
                             style={"text-align": "center", 'margin-top': '10px'}),
                 ]),
-                color="#7c8895", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}),
+                color="#242e31", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}),
                 width="auto")],
             justify="center",
             className="mt-5"),
