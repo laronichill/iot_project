@@ -48,6 +48,13 @@ client_id = f'python-mqtt-{random.randint(0, 100)}'
 esp_message = 0
 esp_rfid_message = "000000"
 
+
+sender_email = "iotprojectemail1@gmail.com"
+receiver_email = "sayemshah461@gmail.com"
+password = "xhym qvsv srmj zfav"
+smtp_server = "smtp.gmail.com"
+
+
 temp_email_sent = False
 fan_status_checker = False
 email_counter = 0    # just checks if email has been sent at some stage
