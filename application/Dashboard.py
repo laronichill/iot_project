@@ -31,12 +31,19 @@ app = Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=[
     ])
 
 
+navbar = dbc.NavbarSimple(
+    brand="IOT SMART HOME",
+    color="dark",
+    dark=True,
+    sticky="top"
+)
+
 #---------User Information Variables-------
 user_id = "Default"
 temp_threshold = 25.0
 light_threshold = 500
 humidity = 35
-path_to_picture = 'assets/cruz.jpg'
+path_to_picture = 'assets/luigi.jpg'
 #-----------------------------------------
 
 #MQTT connection variables
@@ -47,13 +54,6 @@ topic2 = "esp/rfid"
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 esp_message = 0
 esp_rfid_message = "000000"
-
-
-sender_email = "iotprojectemail1@gmail.com"
-receiver_email = "sayemshah461@gmail.com"
-password = "xhym qvsv srmj zfav"
-smtp_server = "smtp.gmail.com"
-
 
 temp_email_sent = False
 fan_status_checker = False
@@ -70,62 +70,64 @@ Motor2 = 13 # Input Pin
 Motor3 = 11 # Input Pin
 LedPin = 32
 
-GPIO.setup(Motor1, GPIO.OUT)
-GPIO.setup(Motor2, GPIO.OUT)
-GPIO.setup(Motor3, GPIO.OUT)
+GPIO.setup(Motor1, GPIO.IN)
+GPIO.setup(Motor2, GPIO.IN)
+GPIO.setup(Motor3, GPIO.IN)
 GPIO.setup(LedPin, GPIO.OUT)
 GPIO.setup(DHTPin, GPIO.OUT)
 
+#Images and GIFs
 light_bulb_off = 'assets/lightbulbOFF.png'        
 light_bulb_on = 'assets/lightbulbON.png'       
 url="https://assets5.lottiefiles.com/packages/lf20_UdIDHC.json" #fan lottie gif
 options = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 url2 = "https://assets8.lottiefiles.com/packages/lf20_ylvmhzmx.json" #bluetooth lottie gif
 
+# Dashboard Components
 daq_Gauge = daq.Gauge(
                 id='my-gauge-1',
-                label="",
+                label="Humidity",
                 showCurrentValue=True,
                 size=250,
                 max=100,
-                min=0,
-                style={'margin': 'auto'}  )
-
-html_Humidity_Label = html.H2("Humidity", style={'text-align': 'center'});
-
+                min=0)
 
 daq_Thermometer = daq.Thermometer(
                     id='my-thermometer-1',
                     min=-40,
                     max=60,
                     scale={'start': -40, 'interval': 10},
-                    label="",
+                    label="Temperature",
                     showCurrentValue=True,
                     height=150,
                     units="C",
                     color="red")
 
-html_Temperature_Label = html.H2("Temperature Fan", style={'text-align': 'center'});
+daq_Fahrenheit_ToggleSwitch = daq.ToggleSwitch(
+                    id='fahrenheit-switch',
+                    value=False)
 
-
-daq_Led_Light_Intensity_LEDDisplay = html.Div(
-    id='light-intensity',
-    children=[
-        html.Label("Light Intensity Value", style={'font-weight': 'bold'}),
-        html.Div(id='light-intensity-value', style={'font-size': '24px'})
-    ]
-)
+daq_Led_Light_Intensity_LEDDisplay = daq.LEDDisplay(
+                                        id='light-intensity',
+                                        label="Light Intensity Value",
+                                        labelPosition='bottom',
+                                        value = 0,
+                                        size = 50)
  
+# all fan related html
 html_Div_Fan_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url, id='lottie-gif', isStopped=True, isClickToPauseDisabled=True)], id='fan_display')
 html_Fan_Status_Message = html.H5(id='fan_status_message',style={'text-align':'center'})
-html_Fan_Label = html.H2("Motor Fan", style={'text-align': 'center'});
+html_Fan_Label = html.H6("Electric Fan", style={'text-align': 'center'});
 
-html_Light_Intensity_Label =  html.H2('Light Intensity',style={'text-align':'center'})
+# all related to light intensity and led html
+html_Light_Intensity_Label =  html.H6('Light Intensity',style={'text-align':'center'})
 html_Led_Status_Message = html.H1(id='light_h1',style={'text-align':'center'})
 
+#all bluetooth related html
 html_Bluetooth_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url2, isClickToPauseDisabled=True)])
-html_bluetooth_Label =  html.H2('Bluetooth Devices',style={'text-align':'center'})
+html_bluetooth_Label =  html.H6('Bluetooth Devices',style={'text-align':'center'})
 
+# Intervals
 fan_Status_Message_Interval = dcc.Interval(
             id='fan_status_message_update',
             disabled=False,
@@ -162,12 +164,6 @@ led_On_Email_Interval = dcc.Interval(
             interval = 1*5000,   
             n_intervals = 0)
 
-check_Email_Interval = dcc.Interval(
-            id = 'check-email-update',
-            disabled=False,
-            interval = 1*5000,   
-            n_intervals = 0)
-
 userinfo_Interval = dcc.Interval(
             id = 'userinfo-update',
             disabled=False,
@@ -180,31 +176,23 @@ bluetooth_Interval = dcc.Interval(
             interval = 1*2000,   
             n_intervals = 0)
 
+fahrenheit_Interval = dcc.Interval(
+            id = 'fahrenheit-update',
+            disabled=False,
+            interval = 1*2000,   
+            n_intervals = 0)
 
 sidebar = html.Div([
     html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
-        html.Img(
-            src=path_to_picture,
-            id="picture_path",
-            style={
-                'border': '2px solid black',  # Add black border
-                'width': '140px',
-                'height': '140px',
-                'object-fit': 'cover',
-                'display': 'block',
-                'margin-left': 'auto',
-                'margin-right': 'auto'
-            }
-        ),
-        html.H3("Username:" + str(user_id), style={'margin-top': '30px'}, id="username_user_data"),
-        html.H4("Favorites ", style={'margin-top': '40px'}),
-        html.H5("Humidity: " + str(humidity), style={'margin-left': '15px'}, id="humidity_user_data"),
-        html.H5("Temperature: " + str(temp_threshold), style={'margin-left': '15px'}, id="temperature_user_data"),
-        html.H5("Light Intensity: " + str(light_threshold), style={'margin-left': '15px'}, id="lightintensity_user_data")
+            html.Img(src=path_to_picture, id="picture_path", style={'border-radius': '80px', 'width':'140px', 'height':'140px', 'object-fit': 'cover', 'display': 'block','margin-left':'auto','margin-right': 'auto'}),
+            html.H6("Username:" + str(user_id), style={'margin-top':'30px'}, id="username_user_data"),
+            html.H4("Favorites ", style={'margin-top':'40px'}),
+            html.H6("Humidity: " + str(humidity), style={'margin-left':'15px'}, id="humidity_user_data"),
+            html.H6("Temperature: " + str(temp_threshold), style={'margin-left':'15px'}, id="temperature_user_data"),
+            html.H6("Light Intensity: " + str(light_threshold), style={'margin-left':'15px'}, id="lightintensity_user_data")
+            ])
     ])
-])
-
 
 card_content1 = dbc.Container(
     [
@@ -212,57 +200,19 @@ card_content1 = dbc.Container(
             [
                 dbc.Col(
                     html.H1(
-                        html.B("IOT PROJECT PHASE 4"),
+                        html.B("SMART HOME"),
                         className="text-center",
                     )
                 )
             ]
         ),
+        
         dbc.Row([
-            dbc.Col(
-                dbc.Card(
-                    dbc.Col(
-                        html.Div([
-                            html_Humidity_Label,
-                            daq_Gauge
-                        ], style={'text-align': 'center'})
-                    ),
-                    color="secondary",
-                    inverse=True,
-                    style={"width": "30rem", 'height': "22rem"}
-                ),
-                width="auto"
-            ),
-            dbc.Col(
-                dbc.Card(
-                    dbc.Col(
-                        html.Div([
-                            html_Temperature_Label,
-                            daq_Thermometer
-                        ], style={'text-align': 'center'})
-                    ),
-                    color="secondary",
-                    inverse=True,
-                    style={"width": "30rem", 'height': "22rem"}
-                ),
-                width="auto"
-            ),
-            dbc.Col(
-                dbc.Card(
-                    dbc.Col(
-                        html.Div([
-                            html_Fan_Label,
-                            html_Div_Fan_Gif,
-                            html_Fan_Status_Message
-                        ])
-                    ),
-                    color="secondary",
-                    inverse=True,
-                    style={"width": "30rem", 'height': "22rem"}
-                ),
-                width="auto"
-            )
-        ], justify="center"),
+            dbc.Col(dbc.Card(dbc.Col(daq_Gauge), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([daq_Thermometer])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
+            dbc.Col(dbc.Card(dbc.Col(html.Div([html_Fan_Label, html_Div_Fan_Gif, html_Fan_Status_Message])), color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto")],
+            justify="center",
+        ),
         dbc.Row([
             dbc.Col(dbc.Card(
                      html.Div([
@@ -270,7 +220,7 @@ card_content1 = dbc.Container(
                          html.Img(id="light-bulb", src=light_bulb_off,
                                   style={'width':'80px', 'height': '110px',
                                   'display': 'block','margin-left':'auto','margin-right': 'auto', 'margin-top':'10px'}),
-                         html.H3(id='light-intensity-label', style={'text-align': 'center'}),
+                         daq_Led_Light_Intensity_LEDDisplay,
                          html.H5(id='email_heading',style ={"text-align":"center"}) ]),
                      color="secondary", inverse=True, style={"width": "30rem", 'height': "22rem"}), width="auto"),
             dbc.Col(dbc.Card(
@@ -289,12 +239,13 @@ content = html.Div([
            dbc.Row([
                 card_content1,
                 humidity_Interval, temperature_Interval, light_Intensity_Interval, led_On_Email_Interval,
-                userinfo_Interval, bluetooth_Interval, fan_Status_Message_Interval, fan_Interval, check_Email_Interval
+                userinfo_Interval, bluetooth_Interval, fahrenheit_Interval, fan_Status_Message_Interval, fan_Interval
              ]),
         ])
 
 # Dashboard Layout
 app.layout = dbc.Container([
+                dbc.Row(navbar),
                 dbc.Row([
                     dbc.Col(sidebar, width=2), 
                     dbc.Col(content, width=10, className="bg-secondary") # content col
@@ -315,16 +266,17 @@ def update_output(value):
         print("Humidity : %.2f \t \n"%(dht.humidity))  
         return dht.humidity
 
-# Callback for thermometer conversion
+# Callback for thermometer and Celcius to Fahrenheit conversion
 @app.callback(
     [Output('my-thermometer-1', 'value'),
      Output('my-thermometer-1', 'min'),
      Output('my-thermometer-1', 'max'),
      Output('my-thermometer-1', 'scale'),
      Output('my-thermometer-1', 'units')],
-    [Input('my-thermometer-1', 'value'),
+    [Input('fahrenheit-switch', 'value'),
+    Input('my-thermometer-1', 'value'),
     Input('temp-update', 'n_intervals')])
-def update_output(temp_value, interval_value):
+def update_output(switch_state, temp_value, interval_value):
     dht = DHT.DHT(DHTPin)   
     while(True):
         for i in range(0,15):            
@@ -339,12 +291,15 @@ def update_output(temp_value, interval_value):
         if dht.temperature >= temp_threshold and temp_email_sent == False:
             sendEmail()
             temp_email_sent = True
-
-        return temperature, -40, 60, {'start': -40, 'interval': 10}, 'C'
+             
+        if switch_state:
+           return (temperature * 1.8) + 32, 40, 120, {'start': 40, 'interval': 10}, 'F'
+        else:
+            return temperature, -40, 60, {'start': -40, 'interval': 10}, 'C'
 
 # Checks if the Motor is active or not
 def is_fan_on():  
-    if GPIO.input(Motor1) or GPIO.input(Motor2) or GPIO.input(Motor3):
+    if GPIO.input(Motor1) and not GPIO.input(Motor2) and GPIO.input(Motor3):
         return True
     else:
         return False
@@ -372,13 +327,11 @@ def update_user_information(n):
     return "Username: " + str(user_id) ,"Humidity: 40" ,"Temperature: " +  str(temp_threshold), "Light Intensity: " + str(light_threshold), path_to_picture
 
 #Callback for light intensity
-@app.callback(Output('light-intensity-label', 'children'),Input('light-intensity-update', 'n_intervals'))  
+@app.callback(Output('light-intensity', 'value'), Input('light-intensity-update', 'n_intervals'))  
 def update_output(value):
-    light_intensity = esp_message
-    print("Here is light intensity:", light_intensity)
-    
-    return f"{light_intensity}"
-
+#     run()
+    print("Here is light intensity: ", esp_message) 
+    return esp_message
 
 
 """ sender_email = "iotprojectemail1@gmail.com"
@@ -405,6 +358,7 @@ def sendEmail(): #for temperature
             server.sendmail(sender_email, receiver_email, message)
 
 def sendLedStatusEmail(): #for LED
+        print("PASSED BY SENDLEDSTATUSEMAIL method")
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
         sender_email = "iotprojectemail1@gmail.com"
@@ -458,7 +412,6 @@ def connect_mqtt() -> mqtt_client:
 def on_message_from_lightintensity(client, userdata, message):
    global esp_message
    esp_message = int(float(message.payload.decode()))
-   
 
 #MQTT for rfid tag
 def on_message_from_rfid(client, userdata, message):
@@ -544,51 +497,11 @@ def scanNumberOfBluetoothDevices():
             number_of_devices += 1
     
     return number_of_devices
-
-
-@app.callback(Output('email_heading', 'children'), Input('check-email-update', 'n_intervals'))    
-def read_email_reply():
-    global fan_status
-    mail = imaplib.IMAP4_SSL("imap.gmail.com")
-    mail.login(sender_email, password)
-
-    mail.select("inbox")
-
-    status, email_ids = mail.search(None, "(UNSEEN)")  # Fetch only unread emails
-    print(email_ids)
-    email_ids = email_ids[0].split()
-
-    if email_ids:
-        latest_email_id = email_ids[-1]
-        status, msg_data = mail.fetch(latest_email_id, "(RFC822)")
-
-        msg = email.message_from_bytes(msg_data[0][1])
-
-        for part in msg.walk():
-            if part.get_content_type() == "text/plain":
-                email_body = part.get_payload(decode=True).decode("utf-8")
-                print("Email Body:")
-                print(email_body)
-                if email_body.lower().strip().startswith("yes"):
-                    fan_status = not fan_status  # Toggle fan status
-                else:
-                    print("Email does not start with 'yes'")
-    mail.logout()
-
-def update_fans(n_intervals):
-    global email_sent, fan_status
-    read_email_reply()
-    if fan_status:
-        GPIO.output(Motor1,GPIO.HIGH)
-        GPIO.output(Motor2,GPIO.LOW)
-        GPIO.output(Motor3,GPIO.HIGH)  # Turn on the fan
-    else:
-        GPIO.output(Motor1,GPIO.LOW)
-        GPIO.output(Motor2,GPIO.LOW)
-        GPIO.output(Motor3,GPIO.LOW)  # Turn off the fan
-
+        
 run()
 
 if __name__ == '__main__':
    #app.run_server(debug=True)
     app.run_server(debug=False,dev_tools_ui=False,dev_tools_props_check=False)
+
+
