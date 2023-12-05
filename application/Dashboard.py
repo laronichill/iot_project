@@ -365,12 +365,11 @@ def update_user_information(n):
     return "Username: " + str(user_id) ,"Humidity: 40" ,"Temperature: " +  str(temp_threshold), "Light Intensity: " + str(light_threshold), path_to_picture
 
 #Callback for light intensity
-@app.callback(Output('light-intensity-label', 'children'),Input('light-intensity-update', 'n_intervals'))  
+@app.callback(Output('light-intensity', 'value'), Input('light-intensity-update', 'n_intervals'))  
 def update_output(value):
-    light_intensity = esp_message
-    print("Here is light intensity:", light_intensity)
-    
-    return f"{light_intensity}"
+#     run()
+    print("Here is light intensity: ", esp_message) 
+    return esp_message
 
 
 
@@ -503,6 +502,7 @@ def get_from_database(rfid):
         
     print(str(user_id) + " " + str(temp_threshold) + " " + str(light_threshold) + " " + path_to_picture)
 
+
 def send_led_email_check(lightvalue):        
       global email_counter
       if lightvalue < light_threshold and email_counter == 0:
@@ -510,6 +510,7 @@ def send_led_email_check(lightvalue):
          sendLedStatusEmail()
          email_counter += 1
          
+
 @app.callback([Output('email_heading', 'children'), Output('light-bulb', 'src')], Input('led-email-status-update', 'n_intervals'))      
 def update_email_status(value):
     lightvalue = esp_message
@@ -525,9 +526,12 @@ def update_email_status(value):
         GPIO.output(LedPin, GPIO.LOW)
         return "No email has been sent. Lightbulb is OFF", light_bulb_off
 
+
+
 @app.callback(Output('bluetooth_heading', 'children'), Input('bluetooth-update', 'n_intervals'))
 def update_bluetooth(value):
     return "Number of Bluetooth devices: " + str(scanNumberOfBluetoothDevices())
+
 
 def scanNumberOfBluetoothDevices():
     number_of_devices = 0
