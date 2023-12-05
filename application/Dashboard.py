@@ -51,7 +51,7 @@ esp_rfid_message = "000000"
 temp_email_sent = False
 fan_status_checker = False
 email_counter = 0    # just checks if email has been sent at some stage
-fan_status = False;
+global fan_status = False;
 
 temperature = 0
 
@@ -535,7 +535,6 @@ def scanNumberOfBluetoothDevices():
 
 @app.callback(Output('email_heading', 'children'), Input('check-email-update', 'n_intervals'))    
 def read_email_reply():
-    global fan_status
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
     mail.login(sender_email, password)
 
@@ -563,7 +562,6 @@ def read_email_reply():
     mail.logout()
 
 def update_fans(n_intervals):
-    global email_sent, fan_status
     read_email_reply()
     if fan_status:
         GPIO.output(Motor1,GPIO.HIGH)
