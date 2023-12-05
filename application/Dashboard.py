@@ -43,7 +43,7 @@ user_id = "Default"
 temp_threshold = 25.0
 light_threshold = 500
 humidity = 35
-path_to_picture = 'assets/luigi.jpg'
+path_to_picture = 'assets/cruz.jpg'
 #-----------------------------------------
 
 #MQTT connection variables
