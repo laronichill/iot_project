@@ -51,7 +51,7 @@ esp_rfid_message = "000000"
 temp_email_sent = False
 fan_status_checker = False
 email_counter = 0    # just checks if email has been sent at some stage
-global fan_status = False;
+fan_status = False;
 
 temperature = 0
 
