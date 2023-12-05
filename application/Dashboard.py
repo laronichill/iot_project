@@ -209,7 +209,7 @@ card_content1 = dbc.Container(
                             daq_Gauge
                         ], style={'text-align': 'center'})
                     ),
-                    color="#606b76",
+                    color="#242e31",
                     inverse=True,
                     style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}
                 ),
@@ -223,7 +223,7 @@ card_content1 = dbc.Container(
                             daq_Thermometer
                         ], style={'text-align': 'center'})
                     ),
-                    color="#606b76",
+                    color="#242e31",
                     inverse=True,
                     style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}
                 ),
