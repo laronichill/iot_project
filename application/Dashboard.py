@@ -175,6 +175,7 @@ bluetooth_Interval = dcc.Interval(
     n_intervals=0)
 
 sidebar = html.Div([
+    html.H3('User Profile', style={'text-align': 'center', 'margin-top': '20px'}),
     dbc.CardBody([
         html.Img(
             src=path_to_picture,
@@ -186,9 +187,7 @@ sidebar = html.Div([
                 'object-fit': 'cover',
                 'display': 'block',
                 'margin-left': 'auto',
-                'margin-right': 'auto',
-                'margin-top': '20px',
-                'border-radius': '50%'
+                'margin-right': 'auto'
             }
         ),
         html.H3("Username: " + str(user_id), style={'margin-top': '15px'}, id="username_user_data"),
@@ -197,7 +196,7 @@ sidebar = html.Div([
         html.H5("Temperature: " + str(temp_threshold) + "°C", style={'margin-left': '15px'}, id="temperature_user_data"),
         html.H5("Light Intensity: " + str(light_threshold), style={'margin-left': '15px'}, id="lightintensity_user_data")
     ])
-], style={"padding": "20px", "background-color": "#2c3e50", "color": "white"})
+])
 
 card_content1 = dbc.Container(
     [
@@ -210,9 +209,9 @@ card_content1 = dbc.Container(
                             daq_Gauge
                         ], style={'text-align': 'center'})
                     ),
-                    color="#34495e",
+                    color="#7c8895",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "2px solid #ecf0f1"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
                 ),
                 width="auto"
             ),
@@ -224,9 +223,9 @@ card_content1 = dbc.Container(
                             daq_Thermometer
                         ], style={'text-align': 'center'})
                     ),
-                    color="#34495e",
+                    color="#7c8895",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "2px solid #ecf0f1"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
                 ),
                 width="auto"
             ),
@@ -239,9 +238,9 @@ card_content1 = dbc.Container(
                             html_Fan_Status_Message
                         ])
                     ),
-                    color="#34495e",
+                    color="#7c8895",
                     inverse=True,
-                    style={"width": "30rem", 'height': "22rem", "border": "2px solid #ecf0f1"}
+                    style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}
                 ),
                 width="auto"
             )
@@ -257,7 +256,7 @@ card_content1 = dbc.Container(
                     html.H3(id='light-intensity-label', style={'text-align': 'center'}),
                     html.H5(id='email_heading', style={"text-align": "center"})
                 ]),
-                color="#34495e", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "2px solid #ecf0f1"}),
+                color="#7c8895", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}),
                 width="auto"),
             dbc.Col(dbc.Card(
                 html.Div([
@@ -266,7 +265,7 @@ card_content1 = dbc.Container(
                     html.H5("Number of Bluetooth Devices: ", id='bluetooth_heading',
                             style={"text-align": "center", 'margin-top': '10px'}),
                 ]),
-                color="#34495e", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "2px solid #ecf0f1"}),
+                color="#7c8895", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #242e31"}),
                 width="auto")],
             justify="center",
             className="mt-5"),
@@ -285,7 +284,7 @@ content = html.Div([
 app.layout = dbc.Container([
                 dbc.Row([
                     dbc.Col(sidebar, width=2), 
-                    dbc.Col(content, width=10, className="bg-secondary") # content col
+                    dbc.Col(content, width=10, className="bg-dark") # content col
                 ], style={"height": "100vh"}), # outer
             ], fluid=True) #container
 
