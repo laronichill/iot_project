@@ -388,9 +388,6 @@ smtp_server = "smtp.gmail.com" """
 def sendEmail(): #for temperature
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
-        sender_email = "iotprojectemail1@gmail.com"
-        receiver_email = "laronichill@gmail.com"
-        password = "xhym qvsv srmj zfav"
         subject = "Subject: FAN CONTROL" 
         body = "Your home temperature is greater than your desired threshold. Do you wish to turn on the fan. Reply YES if so."
         message = subject + '\n\n' + body
@@ -405,9 +402,6 @@ def sendEmail(): #for temperature
 def sendLedStatusEmail(): #for LED
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
-        sender_email = "iotprojectemail1@gmail.com"
-        receiver_email = "laronichill@gmail.com"
-        password = "xhym qvsv srmj zfav"
         subject = "Subject: LIGHT NOTIFICATION" 
         current_time = datetime.now()
         time = current_time.strftime("%H:%M")
@@ -424,9 +418,6 @@ def sendLedStatusEmail(): #for LED
 def sendUserEnteredEmail(user_name): #for user(rfid)
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
-        sender_email = "iotprojectemail1@gmail.com"
-        receiver_email = "laronichill@gmail.com"
-        password = "xhym qvsv srmj zfav"
         subject = "Subject: USER ENTERED" 
         current_time = datetime.now()
         time = current_time.strftime("%H:%M")
