@@ -105,13 +105,12 @@ daq_Thermometer = daq.Thermometer(
 
 html_Temperature_Label = html.H2("Temperature Fan", style={'text-align': 'center'})
 
-daq_Led_Light_Intensity_LEDDisplay = html.Div(
-    id='light-intensity',
-    children=[
-        html.Label("Light Intensity Value", style={'font-weight': 'bold'}),
-        html.Div(id='light-intensity-value', style={'font-size': '24px'})
-    ]
-)
+daq_Led_Light_Intensity_LEDDisplay = daq.LEDDisplay(
+                                        id='light-intensity',
+                                        label="Light Intensity Value",
+                                        labelPosition='bottom',
+                                        value = 0,
+                                        size = 50)
 
 html_Div_Fan_Gif = html.Div([de.Lottie(options=options, width="40%", height="25%", url=url, id='lottie-gif',
                                       isStopped=True, isClickToPauseDisabled=True)], id='fan_display')
@@ -258,7 +257,7 @@ card_content1 = dbc.Container(
                              style={'width': '80px', 'height': '110px',
                                     'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto',
                                     'margin-top': '10px'}),
-                    html.H3(id='light-intensity-label', style={'text-align': 'center'}),
+                    daq_Led_Light_Intensity_LEDDisplay,
                     html.H5(id='email_heading', style={"text-align": "center"})
                 ]),
                 color="#242e31", inverse=True, style={"width": "30rem", 'height': "22rem", "border": "5px solid #7c8895"}),
@@ -370,12 +369,11 @@ def update_user_information(n):
     return "Username: " + str(user_id) ,"Humidity: 40" ,"Temperature: " +  str(temp_threshold), "Light Intensity: " + str(light_threshold), path_to_picture
 
 #Callback for light intensity
-@app.callback(Output('light-intensity-label', 'children'),Input('light-intensity-update', 'n_intervals'))  
+@app.callback(Output('light-intensity', 'value'), Input('light-intensity-update', 'n_intervals'))  
 def update_output(value):
-    light_intensity = esp_message
-    print("Here is light intensity:", light_intensity)
-    
-    return f"{light_intensity}"
+#     run()
+    print("Here is light intensity: ", esp_message) 
+    return esp_message
 
 
 
