@@ -63,9 +63,9 @@ Motor2 = 13 # Input Pin
 Motor3 = 11 # Input Pin
 LedPin = 32
 
-GPIO.setup(Motor1, GPIO.IN)
-GPIO.setup(Motor2, GPIO.IN)
-GPIO.setup(Motor3, GPIO.IN)
+GPIO.setup(Motor1, GPIO.OUT)
+GPIO.setup(Motor2, GPIO.OUT)
+GPIO.setup(Motor3, GPIO.OUT)
 GPIO.setup(LedPin, GPIO.OUT)
 GPIO.setup(DHTPin, GPIO.OUT)
 
@@ -151,6 +151,12 @@ light_Intensity_Interval =  dcc.Interval(
 
 led_On_Email_Interval = dcc.Interval(
             id = 'led-email-status-update',
+            disabled=False,
+            interval = 1*5000,   
+            n_intervals = 0)
+
+check_Email_Interval = dcc.Interval(
+            id = 'check-email-update',
             disabled=False,
             interval = 1*5000,   
             n_intervals = 0)
@@ -276,7 +282,7 @@ content = html.Div([
            dbc.Row([
                 card_content1,
                 humidity_Interval, temperature_Interval, light_Intensity_Interval, led_On_Email_Interval,
-                userinfo_Interval, bluetooth_Interval, fan_Status_Message_Interval, fan_Interval
+                userinfo_Interval, bluetooth_Interval, fan_Status_Message_Interval, fan_Interval, check-email-update
              ]),
         ])
 
@@ -331,7 +337,7 @@ def update_output(temp_value, interval_value):
 
 # Checks if the Motor is active or not
 def is_fan_on():  
-    if GPIO.input(Motor1) and not GPIO.input(Motor2) and GPIO.input(Motor3):
+    if GPIO.input(Motor1) or GPIO.input(Motor2) or GPIO.input(Motor3):
         return True
     else:
         return False
@@ -531,7 +537,49 @@ def scanNumberOfBluetoothDevices():
             number_of_devices += 1
     
     return number_of_devices
-        
+
+
+@app.callback(Output('email_heading', 'children'), Input('check-email-update', 'n_intervals'))    
+def read_email_reply():
+    global fan_status
+    mail = imaplib.IMAP4_SSL("imap.gmail.com")
+    mail.login(sender_email, password)
+
+    mail.select("inbox")
+
+    status, email_ids = mail.search(None, "(UNSEEN)")  # Fetch only unread emails
+    print(email_ids)
+    email_ids = email_ids[0].split()
+
+    if email_ids:
+        latest_email_id = email_ids[-1]
+        status, msg_data = mail.fetch(latest_email_id, "(RFC822)")
+
+        msg = email.message_from_bytes(msg_data[0][1])
+
+        for part in msg.walk():
+            if part.get_content_type() == "text/plain":
+                email_body = part.get_payload(decode=True).decode("utf-8")
+                print("Email Body:")
+                print(email_body)
+                if email_body.lower().strip().startswith("yes"):
+                    fan_status = not fan_status  # Toggle fan status
+                else:
+                    print("Email does not start with 'yes'")
+    mail.logout()
+
+def update_fans(n_intervals):
+    global email_sent, fan_status
+    read_email_reply()
+    if fan_status:
+        GPIO.output(Motor1,GPIO.HIGH)
+        GPIO.output(Motor2,GPIO.LOW)
+        GPIO.output(Motor3,GPIO.HIGH)  # Turn on the fan
+    else:
+        GPIO.output(Motor1,GPIO.LOW)
+        GPIO.output(Motor2,GPIO.LOW)
+        GPIO.output(Motor3,GPIO.LOW)  # Turn off the fan
+
 run()
 
 if __name__ == '__main__':
