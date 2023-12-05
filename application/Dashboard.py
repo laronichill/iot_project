@@ -270,7 +270,7 @@ card_content1 = dbc.Container(
             justify="center",
             className="mt-5"),
     ],
-    fluid=True, style={'margin-top': '40'})
+    fluid=True, )
 
 content = html.Div([
     dbc.Row([
