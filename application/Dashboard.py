@@ -282,11 +282,17 @@ content = html.Div([
 
 # Dashboard Layout
 app.layout = dbc.Container([
-                dbc.Row([
-                    dbc.Col(sidebar, width=2), 
-                    dbc.Col(content, width=10, className="bg-dark") # content col
-                ], style={"height": "100vh"}), # outer
-            ], fluid=True) #container
+    html.Div(
+        children=[
+            html.H1("Smart Home Dashboard", style={'color': 'white', 'font-size': '2.5rem'}),
+        ],
+        style={'background-color': '#1c1f26', 'padding': '1rem', 'text-align': 'center'}
+    ),
+    dbc.Row([
+        dbc.Col(sidebar, width=2, style={'background-color': '#d8dce0'}),
+        dbc.Col(content, width=10, className="bg-dark")  # content col
+    ], style={"height": "100vh"}),  # outer
+], fluid=True)
 
 # Callback for the humidity
 @app.callback(Output('my-gauge-1', 'value'), Input('humid-update', 'n_intervals'))
